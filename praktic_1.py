@@ -69,36 +69,65 @@ class AutoModel:
 
         else:
             self.speed = current_speed
-            print(f"Поездка происходит на скорости {self.speed} км/ч")
+            return f"Поездка происходит на скорости {self.speed} км/ч"
 
-        is_speed_info = input("""Что хотим увеличить или сбросить скорость?
-Жми на селекторе "+" для увеличения. Либо "-" для сброса скорости > """)
+    def accelerate(self): #метод увеличения скорости
 
-        info = print(f"Движемся на скорости {self.speed} км/ч")
+        print(f"Движемся на скорости {self.speed} км/ч")
 
         Flag = True
         while Flag:
 
-            if is_speed_info == "+":
-                speed_plus = int(input("На сколько увеличиваем > "))
+            is_speed_info_1 = input("Хотим увеличить скорость. Жми на селекторе + для увеличения > ")
 
-                if (self.speed + speed_plus) < 201:
-                    self.speed = (speed_plus + self.speed)
-                    Flag = False
-                    print(f"Движемся на скорости {self.speed} км/ч")
+            if is_speed_info_1 == "+":
 
-                else:
-                    print("Скорость не может превышать 200 км/ч")
+                Flag_2 = True
+                while Flag_2:
 
-            elif is_speed_info == "-":
-                speed_minus = int(input("На сколько снижаем > "))
+                    speed_plus = int(input("На сколько увеличиваем > "))
 
-                if (self.speed - speed_minus) > 0:
-                    self.speed = (self.speed - speed_minus)
-                    Flag = False
-                    print(info)
+                    if (self.speed + speed_plus) <= self.MAX_SPEED:
+                        self.speed = (speed_plus + self.speed)
+                        Flag_2 = False
+                        return f"Скорость увеличили до {self.speed} км/ч"
 
-        return f"Опосля изменения, движемся на скорости {self.speed} км/ч"
+                    else:
+                        print("Скорость не может превышать 200 км/ч")
+
+                Flag = False
+
+            else:
+                print("Жми '+' баран")
+
+    def decelerate(self): #метод сброса скорости
+
+        print(f"Продолжаем движение на скорости {self.speed} км/ч")
+
+        Flag = True
+        while Flag:
+
+            is_speed_info_2 = input("Хотим сбросить скорость. Жми на селекторе - для уменьшения > ")
+
+            if is_speed_info_2 == "-":
+
+                Flag_2 = True
+                while Flag_2:
+
+                    speed_minus = int(input("На сколько снижаем > "))
+
+                    if (self.speed - speed_minus) > 0:
+                        self.speed = (self.speed - speed_minus)
+                        Flag_2 = False
+                        return f"Скорость уменьшили до {self.speed} км/ч"
+
+                    else:
+                        print("Скорость не может быть меньше нуля")
+
+                Flag = False
+
+            else:
+                print("Жми '-' баран")
 
     def stop_engine(self): #метод глушения двигателя
 
@@ -145,5 +174,9 @@ start = a.starting_engine()
 print(start)
 ch = a.change_speed(120)
 print(ch)
+ac = a.accelerate()
+print(ac)
+dc = a.decelerate()
+print(dc)
 stop = a.stop_engine()
 print(stop)

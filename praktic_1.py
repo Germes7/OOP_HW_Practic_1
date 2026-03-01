@@ -37,6 +37,41 @@ class AutoModel:
         return f"""Автомобиль марки: {self.brand} {self.model}. Год выпуска {self.year}, цвет {self.color}.
 Пробег {self.car_mileage_km} км, состояние {self.state}. Скорость {self.speed} км/ч."""
 
-a = AutoModel("BMW", "X600", 2020, "Белый", 107000, True, 175)
+    def starting_engine(self): #метод запуска двигателя
+
+        print("Садимся в автомобиль. Нажимаем кнопку запуска двигателя")
+
+        Flag = True
+
+        while Flag:
+
+            start = input("Нажмите s >")
+
+            if start == "s":
+                self.state = True
+                Flag = False
+                return f"Двигатель запущен"
+
+            else:
+                print("Неудачный запуск двигателя (жми нужную кнопку!)")
+
+    def stop_engine(self): #метод глушения двигателя
+        pass
+
+    def change_speed(self): #метод изменения скорости
+        pass
+
+    def change_color(self): #метод изменения скорости
+        pass
+
+    def is_running_engine(self): #метод запроса -запущен ли двигатель?
+        pass
+
+    def current_speed(self): #текущая скорость?
+        pass
+
+a = AutoModel("BMW", "X600", 2020, "Белый", 107000, False, 0)
 
 print(a)
+start = a.starting_engine()
+print(start)

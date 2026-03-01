@@ -25,4 +25,18 @@ class AutoModel:
         self.car_mileage_km = car_mileage_km
         self.state = state
         self.speed = speed
-        
+
+        if self.state == True:
+            self.state = "заведен"
+
+        else:
+            self.state = "заглушен"
+            self.speed = 0
+
+    def __str__(self):
+        return f"""Автомобиль марки: {self.brand} {self.model}. Год выпуска {self.year}, цвет {self.color}.
+Пробег {self.car_mileage_km} км, состояние {self.state}. Скорость {self.speed} км/ч."""
+
+a = AutoModel("BMW", "X600", 2020, "Белый", 107000, True, 175)
+
+print(a)

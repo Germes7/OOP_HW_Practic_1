@@ -50,15 +50,34 @@ class AutoModel:
             if start == "s":
                 self.state = True
                 Flag = False
-                return f"Двигатель запущен"
+                return "Двигатель запущен"
 
             else:
-                print("Неудачный запуск двигателя (жми нужную кнопку!)")
+                print("Неудачный запуск двигателя (жми нужную кнопку!)"
 
     def stop_engine(self): #метод глушения двигателя
-        pass
 
-    def change_speed(self): #метод изменения скорости
+        print("Перед выходом из автомобиля, глушим двигатель")
+
+        Flag = True
+
+        while Flag:
+
+            if self.speed == 0:
+                stop = input("Жмем на кнопку выключения авто s > ")
+
+                if stop == "s":
+                    self.state = False
+                    Flag = False
+                    return "Двигатель заглушен"
+
+                else:
+                    print("Опять ищи нужную кнопку")
+
+            else:
+                print("Камикадзе, сначала затормози!")
+
+    def change_speed(self):
         pass
 
     def change_color(self): #метод изменения скорости
@@ -75,3 +94,5 @@ a = AutoModel("BMW", "X600", 2020, "Белый", 107000, False, 0)
 print(a)
 start = a.starting_engine()
 print(start)
+stop = a.stop_engine()
+print(stop)

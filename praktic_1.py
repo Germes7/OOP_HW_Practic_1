@@ -205,18 +205,28 @@ class AutoModel:
 
 a = AutoModel("BMW", "X600", 2020, "Белый", 107000, False, 0)
 
-print(a)
-start = a.starting_engine()
-print(start)
-ch = a.change_speed(195)
-print(ch)
-ac = a.accelerate()
-print(ac)
-dc = a.decelerate()
-print(dc)
-stop = a.stop_engine()
-print(stop)
-color = a.is_change_color()
-print(color)
-run = a.is_running_engine()
-print(run)
+
+# Задача №2
+# Создайте класс для моделирования работы смартфона. В качестве полей задаются: марка, модель, операционная система,
+# объем встроенной памяти, объем оперативной памяти, заряд батареи (в процентах), состояние "включен/выключен".
+# Реализовать операции: включение и выключение смартфона, установка новой операционной системы, установка/удаление
+# приложений, изменение уровня заряда батареи (зарядка и разрядка), опрос состояния смартфона (включен или выключен),
+# опрос текущего уровня заряда батареи. Операция вывода на экран ( ) должна аккумулировать
+# состояние полей объекта.
+
+class Smartphone:
+
+    marca: str
+    model: str
+    o_sistem: str
+    memory_capa: int
+    charge: int
+    current_state: bool
+    def __init__(self, marca: str, model: str, o_sistem: str, memory_capa: int, charge: int, current_state: bool):
+
+        self.marca = marca
+        self.model = model
+        self.o_sistem = o_sistem
+        self.memory_capa = memory_capa
+        self.charge = charge
+        self.current_state = current_state

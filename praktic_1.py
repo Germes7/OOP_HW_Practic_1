@@ -131,9 +131,22 @@ class AutoModel:
 
     def stop_engine(self): #метод глушения двигателя
 
-        info = "Двигатель заглушен"
+        print("Начинаем снижать скорость ....")
+        if self.speed > 0: # про данный метод, вспомнил Ваши уроки по строкам. Не зря учили!
 
-        print("Перед выходом из автомобиля, глушим двигатель")
+            import time
+            for i in range(self.speed, 0, -10):
+                time.sleep(0.65)
+                print(f"\r{i} км/ч", end="")
+
+            print(f"\r0 км/ч", end="")  # каюсь, как сделать вывод спидометра на ноль, подсмотрел в паутине
+            time.sleep(1.0)  # Небольшая пауза, чтобы увидеть 0
+            print()
+
+            self.speed = 0
+
+        else:
+            print("Автомобиль уже стоит.")
 
         Flag = True
 
@@ -145,15 +158,13 @@ class AutoModel:
                 if stop == "s":
                     self.state = False
                     Flag = False
-                    return info
+                    return "Двигатель заглушен"
 
                 else:
                     print("Опять ищи нужную кнопку")
 
             else:
-                self.speed = 0
                 self.state = False
-                return info
 
 
 

@@ -203,9 +203,6 @@ class AutoModel:
             return "Двигатель работает"
 
 
-a = AutoModel("BMW", "X600", 2020, "Белый", 107000, False, 0)
-
-
 # Задача №2
 # Создайте класс для моделирования работы смартфона. В качестве полей задаются: марка, модель, операционная система,
 # объем встроенной памяти, объем оперативной памяти, заряд батареи (в процентах), состояние "включен/выключен".
@@ -230,3 +227,17 @@ class Smartphone:
         self.memory_capa = memory_capa
         self.charge = charge
         self.current_state = current_state
+
+    def __str__(self):
+
+        if self.current_state == False:
+            self.current_state = "выключен"
+
+        else:
+            self.current_state = "включен"
+
+        return f"""Смартфон. Модель {self.marca} {self.model}. С предустановленной операционной системой: {self.o_sistem}.
+Имеет объем встроенной памяти: {self.memory_capa} Гб; Текущий заряд: {self.charge}%; Состояние: {self.current_state}."""
+
+m = Smartphone("Motorolla", "T-200", "Android", 16, 25, True)
+print(m)

@@ -132,9 +132,9 @@ class AutoModel:
     def stop_engine(self): #метод глушения двигателя
 
         print("Начинаем снижать скорость ....")
-        if self.speed > 0: # про данный метод, вспомнил Ваши уроки по строкам. Не зря учили!
+        if self.speed > 0:
 
-            import time
+            import time # про данный метод, вспомнил Ваши уроки по строкам. Не зря учили!
             for i in range(self.speed, 0, -10):
                 time.sleep(0.65)
                 print(f"\r{i} км/ч", end="")
@@ -166,7 +166,6 @@ class AutoModel:
             else:
                 self.state = False
 
-
     def is_change_color(self): #метод изменения цвета
 
         Flag =True
@@ -195,13 +194,14 @@ class AutoModel:
             else:
                 print("Ищем нужную кнопку на клаве")
 
-
-
     def is_running_engine(self): #метод запроса -запущен ли двигатель?
-        pass
 
-    def current_speed(self): #текущая скорость?
-        pass
+        if self.state == False:
+            return "Двигатель заглушен"
+
+        else:
+            return "Двигатель работает"
+
 
 a = AutoModel("BMW", "X600", 2020, "Белый", 107000, False, 0)
 
@@ -218,3 +218,5 @@ stop = a.stop_engine()
 print(stop)
 color = a.is_change_color()
 print(color)
+run = a.is_running_engine()
+print(run)

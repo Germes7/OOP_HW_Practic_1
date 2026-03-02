@@ -167,10 +167,35 @@ class AutoModel:
                 self.state = False
 
 
+    def is_change_color(self): #метод изменения цвета
+
+        Flag =True
+
+        while Flag:
+
+            colors = input("Хотим перекрасить автомобиль? Да: нажмите 'y', Нет: нажмите 'n' > ")
+
+            if colors == "y":
+
+                new_color = input("В какой цвет > ")
+
+                if new_color.lower() != self.color.lower():
+
+                    self.color = new_color
+                    Flag = False
+                    return f"Автомобиль перекрашен в цвет {new_color}"
+
+                else:
+                    return f"Автомобиль уже в этом цвете {self.color}"
+
+            elif colors == "n":
+                Flag = False
+                return f"Автомобиль остался в прежнем цвете {self.color}"
+
+            else:
+                print("Ищем нужную кнопку на клаве")
 
 
-    def change_color(self): #метод изменения цвета
-        pass
 
     def is_running_engine(self): #метод запроса -запущен ли двигатель?
         pass
@@ -183,7 +208,7 @@ a = AutoModel("BMW", "X600", 2020, "Белый", 107000, False, 0)
 print(a)
 start = a.starting_engine()
 print(start)
-ch = a.change_speed(257)
+ch = a.change_speed(195)
 print(ch)
 ac = a.accelerate()
 print(ac)
@@ -191,3 +216,5 @@ dc = a.decelerate()
 print(dc)
 stop = a.stop_engine()
 print(stop)
+color = a.is_change_color()
+print(color)

@@ -126,9 +126,20 @@ class Smartphone:
 
         return "Смартфон выключен"
 
+    def new_os(self, new_os: str):
+
+        if new_os.lower() != self.o_sistem.lower():
+
+            self.o_sistem = new_os
+            return f"Операционная система переустановлена на {self.o_sistem}"
+
+        return f"Операционная осталась прежней {self.o_sistem}"
+
 
 
 m = Smartphone("Motorolla", "T-200", "Android", 16, 100, False)
 print(m)
 sw = m.switching()
 print(sw)
+new_os = m.new_os("Mic")
+print(new_os)

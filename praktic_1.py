@@ -29,180 +29,58 @@ class AutoModel:
         self.state = state
         self.speed = speed
 
-        if self.state == True:
-            self.state = "заведен"
-
-        else:
-            self.state = "заглушен"
-            self.speed = 0
-
-        if not 0 < self.speed or self.speed < self.MAX_SPEED:
-            print(f"Скорость не может быть меньше 0 или больше {self.MAX_SPEED} км/ч")
-
-        else:
-            print(f"Скорость {self.speed} введена верно")
+        if self.speed > AutoModel.MAX_SPEED or self.speed < 0:
+            raise ValueError("Скорость не должна превышать 200 км/ч либо быть отрицательной")
 
     def __str__(self):
+
         return f"""Автомобиль марки: {self.brand} {self.model}. Год выпуска {self.year}, цвет {self.color}.
 Пробег {self.car_mileage_km} км, состояние {self.state}. Скорость {self.speed} км/ч."""
 
     def starting_engine(self): # метод запуска двигателя
 
-        print("Садимся в автомобиль. Нажимаем кнопку запуска двигателя")
+        if self.state == False:
+            self.state = True
+            return "Двигатель запущен"
 
-        Flag = True
-
-        while Flag:
-
-            start = input("Нажмите s > ")
-
-            if start == "s":
-                self.state = True
-                Flag = False
-                return "Двигатель запущен"
-
-            else:
-                print("Неудачный запуск двигателя (жми нужную кнопку!)")
+        return "Двигатель уже запущен"
 
     def change_speed(self, current_speed: int): # метод изменения скорости поездки на данный момент
 
-        if not current_speed <= self.MAX_SPEED or not current_speed > 0:
-            return f"Скорость не может быть отрицательной или превышать допустимый порог в {self.MAX_SPEED} км/ч"
+        if not current_speed <= AutoModel.MAX_SPEED or not current_speed > 0:
+            raise ValueError(f"Скорость не может быть отрицательной или превышать допустимый порог в {AutoModel.MAX_SPEED} км/ч")
 
-        else:
-            self.speed = current_speed
-            return f"Поездка происходит на скорости {self.speed} км/ч"
+        self.speed = current_speed
 
-    def accelerate(self): # метод увеличения скорости
+    def accelerate(self, new_speed: int): # метод изменения скорости
 
-        print(f"Движемся на скорости {self.speed} км/ч")
+        if new_speed > (AutoModel.MAX_SPEED - self.speed) or abs(new_speed) > self.speed:
+            raise ValueError(f"Скорость не может быть отрицательной или превышать допустимый порог в {AutoModel.MAX_SPEED} км/ч")
 
-        Flag = True
-        while Flag:
-
-            is_speed_info_1 = input("Хотим увеличить скорость. Жми на селекторе + для увеличения > ")
-
-            if is_speed_info_1 == "+":
-
-                Flag_2 = True
-                while Flag_2:
-
-                    speed_plus = int(input("На сколько увеличиваем > "))
-
-                    if (self.speed + speed_plus) <= self.MAX_SPEED:
-                        self.speed = (speed_plus + self.speed)
-                        Flag_2 = False
-                        return f"Скорость увеличили до {self.speed} км/ч"
-
-                    else:
-                        print("Скорость не может превышать 200 км/ч")
-
-                Flag = False
-
-            else:
-                print("Жми '+' баран")
-
-    def decelerate(self): # метод сброса скорости
-
-        print(f"Продолжаем движение на скорости {self.speed} км/ч")
-
-        Flag = True
-        while Flag:
-
-            is_speed_info_2 = input("Хотим сбросить скорость. Жми на селекторе - для уменьшения > ")
-
-            if is_speed_info_2 == "-":
-
-                Flag_2 = True
-                while Flag_2:
-
-                    speed_minus = int(input("На сколько снижаем > "))
-
-                    if (self.speed - speed_minus) > 0:
-                        self.speed = (self.speed - speed_minus)
-                        Flag_2 = False
-                        return f"Скорость уменьшили до {self.speed} км/ч"
-
-                    else:
-                        print("Скорость не может быть меньше нуля")
-
-                Flag = False
-
-            else:
-                print("Жми '-' баран")
+        self.speed += new_speed
 
     def stop_engine(self): # метод глушения двигателя
 
-        print("Начинаем снижать скорость ....")
-        if self.speed > 0:
+        if self.state == True:
+            self.state = False
+            return "Двигатель заглушен"
 
-            import time # про данный метод, вспомнил Ваши уроки по строкам. Не зря учили!
-            for i in range(self.speed, 0, -10):
-                time.sleep(0.65)
-                print(f"\r{i} км/ч", end="")
+        return "Двигатель был заглушен"
 
-            print(f"\r0 км/ч", end="")  # каюсь, как сделать вывод спидометра на ноль, подсмотрел в паутине
-            time.sleep(1.0)  # Небольшая пауза, чтобы увидеть 0
-            print()
+    def is_change_color(self, new_color: str): # метод изменения цвета
 
-            self.speed = 0
+        if new_color.lower() != self.color.lower():
+            self.color = new_color
+            return f"Авто перекрашен. Цвет {self.color}"
 
-        else:
-            print("Автомобиль уже стоит.")
-
-        Flag = True
-
-        while Flag:
-
-            if self.speed == 0:
-                stop = input("Жмем на кнопку выключения авто s > ")
-
-                if stop == "s":
-                    self.state = False
-                    Flag = False
-                    return "Двигатель заглушен"
-
-                else:
-                    print("Опять ищи нужную кнопку")
-
-            else:
-                self.state = False
-
-    def is_change_color(self): # метод изменения цвета
-
-        Flag =True
-
-        while Flag:
-
-            colors = input("Хотим перекрасить автомобиль? Да: нажмите 'y', Нет: нажмите 'n' > ")
-
-            if colors == "y":
-
-                new_color = input("В какой цвет > ")
-
-                if new_color.lower() != self.color.lower():
-
-                    self.color = new_color
-                    Flag = False
-                    return f"Автомобиль перекрашен в цвет {new_color}"
-
-                else:
-                    return f"Автомобиль уже в этом цвете {self.color}"
-
-            elif colors == "n":
-                Flag = False
-                return f"Автомобиль остался в прежнем цвете {self.color}"
-
-            else:
-                print("Ищем нужную кнопку на клаве")
+        return f"Цвет не изменился. Авто остался в прежнем цвете {self.color}"
 
     def is_running_engine(self): # метод запроса -запущен ли двигатель?
 
         if self.state == False:
             return "Двигатель заглушен"
 
-        else:
-            return "Двигатель работает"
+        return "Двигатель работает"
 
 
 # Задача №2
@@ -221,7 +99,7 @@ class Smartphone:
     memory_capa: int
     charge: int
     current_state: bool
-    
+
     def __init__(self, marca: str, model: str, o_sistem: str, memory_capa: int, charge: int, current_state: bool):
 
         self.marca = marca

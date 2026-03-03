@@ -51,6 +51,7 @@ class AutoModel:
             raise ValueError(f"Скорость не может быть отрицательной или превышать допустимый порог в {AutoModel.MAX_SPEED} км/ч")
 
         self.speed = current_speed
+        return f"Скорость составляет {self.speed} км/ч"
 
     def accelerate(self, new_speed: int): # метод изменения скорости
 
@@ -58,6 +59,7 @@ class AutoModel:
             raise ValueError(f"Скорость не может быть отрицательной или превышать допустимый порог в {AutoModel.MAX_SPEED} км/ч")
 
         self.speed += new_speed
+        return f"Скорость изменилась. Составляет {self.speed}"
 
     def stop_engine(self): # метод глушения двигателя
 
@@ -81,6 +83,22 @@ class AutoModel:
             return "Двигатель заглушен"
 
         return "Двигатель работает"
+
+a = AutoModel("Toyota", "CH-R", 2020, "Белый", 20200, False, 0)
+print(a)
+star = a.starting_engine()
+print(star)
+ch = a.change_speed(150)
+print(ch)
+acc = a.accelerate(-40)
+print(acc)
+stop = a.stop_engine()
+print(stop)
+color = a.is_change_color("Ярко-белый")
+print(color)
+run = a.is_running_engine()
+print(run)
+
 
 
 # Задача №2

@@ -135,7 +135,12 @@ class Smartphone:
 
         return f"Операционная осталась прежней {self.o_sistem}"
 
+    def set_application(self, command: bool):
 
+        if command == True:
+            return "Установлено новое приложение"
+
+        return "Отказались от установки нового приложения"
 
 m = Smartphone("Motorolla", "T-200", "Android", 16, 100, False)
 print(m)
@@ -143,3 +148,5 @@ sw = m.switching()
 print(sw)
 new_os = m.new_os("Mic")
 print(new_os)
+app = m.set_application(False)
+print(app)

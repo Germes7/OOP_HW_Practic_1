@@ -92,6 +92,7 @@ class AutoModel:
 # опрос текущего уровня заряда батареи. Операция вывода на экран ( __str__) должна аккумулировать
 # состояние полей объекта.
 
+from typing import Literal
 class Smartphone:
 
     marca: str
@@ -118,13 +119,20 @@ class Smartphone:
         return f"""Смартфон. Модель {self.marca} {self.model}. С предустановленной операционной системой: {self.o_sistem}.
 Имеет объем встроенной памяти: {self.memory_capa} Гб; Текущий заряд: {self.charge}%; Состояние: {self.current_state}."""
 
-    def switching(self): # Метод вкл / выкл. смартфона
+    def switching(self, command: Literal['y', 'n']): # Метод вкл / выкл. смартфона
 
-        if self.current_state == False:
+        if command == 'y' and self.current_state == False:
             self.current_state = True
             return "Смартфон включен"
 
-        return "Смартфон выключен"
+        elif command == 'y' and self.current_state == True:
+            return "Смартфон уже включен"
+
+        elif command == 'n' and self.current_state == True:
+            self.current_state = False
+            return "Смартфон выключен"
+
+        return "Смартфон уже выключен"
 
     def new_os(self, new_os: str): # Метод установки нов. OS
 
@@ -149,16 +157,23 @@ class Smartphone:
 
         return f"Смартфон требуется подзарядить. Текущий заряд: {self.charge} %"
 
-    def status_smart(self):
+    def status_smart(self): # Метод опроса состояния смартфона Вкл/Выкл
 
         if self.current_state == True:
             return "Смартфон включен"
 
         return "Смартфон выключен"
 
+    def current_charge(self): # Метод опроса текущего заряда
+
+        if self.current_state == False:
+            return "Для начала включите смартфон"
+
+        return f"Текущий заряд смартфона: {self.charge} %"
+
 m = Smartphone("Motorolla", "T-200", "Android", 16, 12, False)
 print(m)
-sw = m.switching()
+sw = m.switching("y")
 print(sw)
 new_os = m.new_os("Mic")
 print(new_os)
@@ -168,3 +183,5 @@ char = m.set_charge()
 print(char)
 status = m.status_smart()
 print(status)
+char_cur = m.current_charge()
+print(char_cur)

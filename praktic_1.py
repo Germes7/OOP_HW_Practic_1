@@ -202,7 +202,17 @@ class Potion:
         return f"""Зелье: {self.potion_view}. Имеет в своем составе ингредиенты {self.ingredients};
 сложность приготовления: {self.difficulty} баллов; эффект зелья: {self.potion_effect}; состояние: {self.state}"""
 
+    def add_ingredient(self, ingredient: str): # Метод добавления ингредиента
+
+        if not ingredient.lower() in self.ingredients:
+            self.ingredients.append(ingredient)
+            return f"Ингредиент {ingredient}, добавлен"
+
+        return f"Данный ингредиент, уже в списке"
 
 Z = Potion("Расширения сознания", ["подорожник", "лапа лягушки", "тысячелистник", "слюна нетопыря",
                                    "правый глаз кабана", "зуб Лернейской гидры"], 7, "уносит в астрал", True)
 print(Z)
+ing = Z.add_ingredient("Лапа лягушки")
+print(ing)
+print(Z.ingredients)

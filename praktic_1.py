@@ -84,23 +84,6 @@ class AutoModel:
 
         return "Двигатель работает"
 
-a = AutoModel("Toyota", "CH-R", 2020, "Белый", 20200, False, 0)
-print(a)
-star = a.starting_engine()
-print(star)
-ch = a.change_speed(150)
-print(ch)
-acc = a.accelerate(-40)
-print(acc)
-stop = a.stop_engine()
-print(stop)
-color = a.is_change_color("Ярко-белый")
-print(color)
-run = a.is_running_engine()
-print(run)
-
-
-
 # Задача №2
 # Создайте класс для моделирования работы смартфона. В качестве полей задаются: марка, модель, операционная система,
 # объем встроенной памяти, объем оперативной памяти, заряд батареи (в процентах), состояние "включен/выключен".
@@ -127,16 +110,25 @@ class Smartphone:
         self.charge = charge
         self.current_state = current_state
 
+        if self.charge > 100 or self.charge < 0:
+            raise ValueError("Заряд батареи, не может превышать 100% либо быть меньше нуля")
+
     def __str__(self):
-
-        if self.current_state == False:
-            self.current_state = "выключен"
-
-        else:
-            self.current_state = "включен"
 
         return f"""Смартфон. Модель {self.marca} {self.model}. С предустановленной операционной системой: {self.o_sistem}.
 Имеет объем встроенной памяти: {self.memory_capa} Гб; Текущий заряд: {self.charge}%; Состояние: {self.current_state}."""
 
-m = Smartphone("Motorolla", "T-200", "Android", 16, 25, True)
+    def switching(self):# Метод вкл / выкл. смартфона
+
+        if self.current_state == False:
+            self.current_state = True
+            return "Смартфон включен"
+
+        return "Смартфон выключен"
+
+
+
+m = Smartphone("Motorolla", "T-200", "Android", 16, 100, False)
 print(m)
+sw = m.switching()
+print(sw)

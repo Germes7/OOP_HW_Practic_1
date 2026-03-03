@@ -8,6 +8,7 @@
 # скорости. Операция вывода на экран ( ) должна аккумулировать состояние полей объекта/
 
 class AutoModel:
+
     MAX_SPEED = 200
 
     brand: str
@@ -17,6 +18,7 @@ class AutoModel:
     car_mileage_km: int
     state: bool
     speed: int
+
     def __init__(self, brand: str, model: str, year: int, color: str, car_mileage_km: int, state: bool, speed: int):
 
         self.brand = brand
@@ -35,7 +37,7 @@ class AutoModel:
             self.speed = 0
 
         if not 0 < self.speed or self.speed < self.MAX_SPEED:
-            print (f"Скорость не может быть меньше 0 или больше {self.MAX_SPEED} км/ч")
+            print(f"Скорость не может быть меньше 0 или больше {self.MAX_SPEED} км/ч")
 
         else:
             print(f"Скорость {self.speed} введена верно")
@@ -44,7 +46,7 @@ class AutoModel:
         return f"""Автомобиль марки: {self.brand} {self.model}. Год выпуска {self.year}, цвет {self.color}.
 Пробег {self.car_mileage_km} км, состояние {self.state}. Скорость {self.speed} км/ч."""
 
-    def starting_engine(self): #метод запуска двигателя
+    def starting_engine(self): # метод запуска двигателя
 
         print("Садимся в автомобиль. Нажимаем кнопку запуска двигателя")
 
@@ -62,7 +64,7 @@ class AutoModel:
             else:
                 print("Неудачный запуск двигателя (жми нужную кнопку!)")
 
-    def change_speed(self, current_speed: int): #метод изменения скорости поездки на данный момент
+    def change_speed(self, current_speed: int): # метод изменения скорости поездки на данный момент
 
         if not current_speed <= self.MAX_SPEED or not current_speed > 0:
             return f"Скорость не может быть отрицательной или превышать допустимый порог в {self.MAX_SPEED} км/ч"
@@ -71,7 +73,7 @@ class AutoModel:
             self.speed = current_speed
             return f"Поездка происходит на скорости {self.speed} км/ч"
 
-    def accelerate(self): #метод увеличения скорости
+    def accelerate(self): # метод увеличения скорости
 
         print(f"Движемся на скорости {self.speed} км/ч")
 
@@ -100,7 +102,7 @@ class AutoModel:
             else:
                 print("Жми '+' баран")
 
-    def decelerate(self): #метод сброса скорости
+    def decelerate(self): # метод сброса скорости
 
         print(f"Продолжаем движение на скорости {self.speed} км/ч")
 
@@ -129,7 +131,7 @@ class AutoModel:
             else:
                 print("Жми '-' баран")
 
-    def stop_engine(self): #метод глушения двигателя
+    def stop_engine(self): # метод глушения двигателя
 
         print("Начинаем снижать скорость ....")
         if self.speed > 0:
@@ -166,7 +168,7 @@ class AutoModel:
             else:
                 self.state = False
 
-    def is_change_color(self): #метод изменения цвета
+    def is_change_color(self): # метод изменения цвета
 
         Flag =True
 
@@ -194,7 +196,7 @@ class AutoModel:
             else:
                 print("Ищем нужную кнопку на клаве")
 
-    def is_running_engine(self): #метод запроса -запущен ли двигатель?
+    def is_running_engine(self): # метод запроса -запущен ли двигатель?
 
         if self.state == False:
             return "Двигатель заглушен"
@@ -208,7 +210,7 @@ class AutoModel:
 # объем встроенной памяти, объем оперативной памяти, заряд батареи (в процентах), состояние "включен/выключен".
 # Реализовать операции: включение и выключение смартфона, установка новой операционной системы, установка/удаление
 # приложений, изменение уровня заряда батареи (зарядка и разрядка), опрос состояния смартфона (включен или выключен),
-# опрос текущего уровня заряда батареи. Операция вывода на экран ( ) должна аккумулировать
+# опрос текущего уровня заряда батареи. Операция вывода на экран ( __str__) должна аккумулировать
 # состояние полей объекта.
 
 class Smartphone:
@@ -219,6 +221,7 @@ class Smartphone:
     memory_capa: int
     charge: int
     current_state: bool
+    
     def __init__(self, marca: str, model: str, o_sistem: str, memory_capa: int, charge: int, current_state: bool):
 
         self.marca = marca

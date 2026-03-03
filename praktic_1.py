@@ -149,6 +149,13 @@ class Smartphone:
 
         return f"Смартфон требуется подзарядить. Текущий заряд: {self.charge} %"
 
+    def status_smart(self):
+
+        if self.current_state == True:
+            return "Смартфон включен"
+
+        return "Смартфон выключен"
+
 m = Smartphone("Motorolla", "T-200", "Android", 16, 12, False)
 print(m)
 sw = m.switching()
@@ -159,3 +166,5 @@ app = m.set_application(False)
 print(app)
 char = m.set_charge()
 print(char)
+status = m.status_smart()
+print(status)

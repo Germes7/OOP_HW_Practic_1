@@ -171,17 +171,29 @@ class Smartphone:
 
         return f"Текущий заряд смартфона: {self.charge} %"
 
-m = Smartphone("Motorolla", "T-200", "Android", 16, 12, False)
-print(m)
-sw = m.switching("y")
-print(sw)
-new_os = m.new_os("Mic")
-print(new_os)
-app = m.set_application(False)
-print(app)
-char = m.set_charge()
-print(char)
-status = m.status_smart()
-print(status)
-char_cur = m.current_charge()
-print(char_cur)
+
+# Задача №3
+# Создайте класс для моделирования зелья в Хогвартсе. В качестве полей задаются: название зелья, ингредиенты (список),
+# сложность приготовления (по шкале от 1 до 10), эффект зелья, состояние "приготовлено/не приготовлено".
+# Реализовать операции: добавление ингредиента, удаление ингредиента, изменение сложности приготовления, приготовление
+# зелья, изменение эффекта зелья, опрос состояния зелья (приготовлено или не приготовлено), опрос текущих ингредиентов.
+# Операция вывода на экран ( ) должна аккумулировать состояние полей объекта.
+
+class Potion:
+
+    potion_view: str
+    ingredients: list[None]
+    difficulty: int
+    potion_effect: str
+    state: bool
+
+    def __init__(self, potion_view: str, ingredients: list[None], difficulty: int, potion_effect: str, state: bool):
+
+        self.potion_view = potion_view
+        self.ingredients = ingredients
+        self.difficulty = difficulty
+        self.potion_effect = potion_effect
+        self.state = state
+
+        if self.difficulty < 1 or self.difficulty > 10:
+            raise ValueError("Сложность задается в диапазоне от 1 - 10")

@@ -118,7 +118,7 @@ class Smartphone:
         return f"""Смартфон. Модель {self.marca} {self.model}. С предустановленной операционной системой: {self.o_sistem}.
 Имеет объем встроенной памяти: {self.memory_capa} Гб; Текущий заряд: {self.charge}%; Состояние: {self.current_state}."""
 
-    def switching(self):# Метод вкл / выкл. смартфона
+    def switching(self): # Метод вкл / выкл. смартфона
 
         if self.current_state == False:
             self.current_state = True
@@ -126,7 +126,7 @@ class Smartphone:
 
         return "Смартфон выключен"
 
-    def new_os(self, new_os: str):
+    def new_os(self, new_os: str): # Метод установки нов. OS
 
         if new_os.lower() != self.o_sistem.lower():
 
@@ -135,14 +135,21 @@ class Smartphone:
 
         return f"Операционная осталась прежней {self.o_sistem}"
 
-    def set_application(self, command: bool):
+    def set_application(self, command: bool): # Метод установки нов. приложения
 
         if command == True:
             return "Установлено новое приложение"
 
         return "Отказались от установки нового приложения"
 
-m = Smartphone("Motorolla", "T-200", "Android", 16, 100, False)
+    def set_charge(self): # Метод зарядки смартфона
+
+        if self.charge == 100:
+            return f"Смартфон заряжен полностью: {self.charge} %"
+
+        return f"Смартфон требуется подзарядить. Текущий заряд: {self.charge} %"
+
+m = Smartphone("Motorolla", "T-200", "Android", 16, 12, False)
 print(m)
 sw = m.switching()
 print(sw)
@@ -150,3 +157,5 @@ new_os = m.new_os("Mic")
 print(new_os)
 app = m.set_application(False)
 print(app)
+char = m.set_charge()
+print(char)

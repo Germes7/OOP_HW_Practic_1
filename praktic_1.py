@@ -320,11 +320,12 @@ class User:
     def take_book(self, new_book: str): # Метод добавления книги в список взятых книг
 
         new_book = new_book.capitalize()
-        if not new_book in {self.list_book_user}:
-            self.list_book_user.append(new_book)
-            return f"Книга {new_book}, добавлена в список взятых книг: {self.list_book_user}"
+        if new_book not in self.list_book_user:
 
-        return f"Книга {new_book}, уже в списке"
+            self.list_book_user.append(new_book)
+            return f"Книга '{new_book}', добавлена в список взятых книг: {self.list_book_user}"
+
+        return f"Книга '{new_book}', уже в списке"
 
 
 
@@ -369,5 +370,10 @@ class Library:
         return f"""Библиотека: '{self.library_name}';\nАдрес: {self.library_address};\nКоличество книг: {len(self.book_list)} шт.
 Количество читателей: {len(self.user_list)} чел."""
 
-lib = Library("Прима","пр. Ленина, 32")
-print(lib)
+
+us = User("Леха",1237, ["Луна и грош"])
+print(us)
+print(us.take_book("откровение"))
+print(us.take_book("откровение"))
+print(us.take_book("1984"))
+print(us)

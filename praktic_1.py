@@ -306,15 +306,27 @@ class Potion:
 class User:
     name: str
     library_card_number: int
-    list_book_user: list[Book]
+    list_book_user: list[str]
 
-    def __init__(self, name: str, library_card_number: int):
+    def __init__(self, name: str, library_card_number: int, list_book_user: list[str]):
 
         self.name = name
         self.library_card_number = library_card_number
-        self.list_book_user = []
+        self.list_book_user = [i.capitalize() for i in list_book_user]
 
-        pass
+    def __str__(self):
+        return f"Имя пользователя библиотекой {self.name}.\nЧитательский билет №{self.library_card_number}.\nВзятые книги: {self.list_book_user}"
+
+    def take_book(self, new_book: str): # Метод добавления книги в список взятых книг
+
+        new_book = new_book.capitalize()
+        if not new_book in {self.list_book_user}:
+            self.list_book_user.append(new_book)
+            return f"Книга {new_book}, добавлена в список взятых книг: {self.list_book_user}"
+
+        return f"Книга {new_book}, уже в списке"
+
+
 
 class Book:
     title: str
@@ -322,16 +334,16 @@ class Book:
     year: int
     genre: str
     status_book: str
-    current_user: [User]
+    current_user: str
 
-    def __init__(self, title: str, autor: str, year: int, genre: str):
+    def __init__(self, title: str, autor: str, year: int, genre: str, status_book: str, current_user: str):
 
         self.title = title
         self.autor = autor
         self.year = year
         self.genre = genre
-        self.status_book = "В наличии"
-        self.current_user = None
+        self.status_book = status_book
+        self.current_user = current_user
 
         pass
 
@@ -339,14 +351,23 @@ class Library:
 
     library_name: str
     library_address: str
-    book_list: list[Book]
-    user_list: list[User]
+    book_list: list[str]
+    user_list: list[str]
 
-    def __init__(self, library_name: str, library_address: str):
+    def __init__(self, library_name: str, library_address: str, book_list: list[str], user_list: list[str]):
 
         self.library_name = library_name
         self.library_address = library_address
-        self.book_list = []
-        self.user_list = []
+        self.book_list = book_list
+        self.user_list = user_list
+
+    def add_book(book: Book): # Метод Добавления книги в список книг библиотеки
 
         pass
+
+    def __str__(self):
+        return f"""Библиотека: '{self.library_name}';\nАдрес: {self.library_address};\nКоличество книг: {len(self.book_list)} шт.
+Количество читателей: {len(self.user_list)} чел."""
+
+lib = Library("Прима","пр. Ленина, 32")
+print(lib)

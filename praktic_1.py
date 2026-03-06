@@ -177,8 +177,8 @@ class Smartphone:
 # Задача №3
 # Создайте класс для моделирования зелья в Хогвартсе. В качестве полей задаются: название зелья, ингредиенты (список),
 # сложность приготовления (по шкале от 1 до 10), эффект зелья, состояние "приготовлено/не приготовлено".
-# Реализовать операции: добавление ингредиента, удаление ингредиента, изменение сложности приготовления, приготовление
-# зелья, изменение эффекта зелья, опрос состояния зелья (приготовлено или не приготовлено), опрос текущих ингредиентов.
+# Реализовать операции: добавление ингредиента, удаление ингредиента, изменение сложности приготовления зелья,
+# изменение эффекта зелья, опрос состояния зелья (приготовлено или не приготовлено), опрос текущих ингредиентов.
 # Операция вывода на экран ( ) должна аккумулировать состояние полей объекта.
 
 class Potion:
@@ -192,7 +192,7 @@ class Potion:
         self.potion_view = potion_view
         self.ingredients = [i.lower() for i in ingredients]
         self.difficulty = difficulty
-        self.potion_effect = potion_effect
+        self.potion_effect = potion_effect.capitalize()
         self.state = state
 
         if self.difficulty < 1 or self.difficulty > 10:
@@ -200,7 +200,7 @@ class Potion:
 
     def __str__(self):
         return f"""Зелье: {self.potion_view}. Имеет в своем составе ингредиенты {self.ingredients};
-сложность приготовления: {self.difficulty} баллов; эффект зелья: {self.potion_effect}; состояние: {self.state}"""
+сложность приготовления: {self.difficulty} бал.; эффект зелья: {self.potion_effect}; состояние: {self.state}"""
 
     def add_ingredient(self, ingredient: str): # Метод добавления ингредиента
 
@@ -230,10 +230,25 @@ class Potion:
         if not param == self.difficulty:
 
             self.difficulty = param
-            return f"Выставлен новый уровень сложности приготовления зелья: {self.difficulty}"
+            return f"Выставлен новый уровень сложности приготовления зелья: {self.difficulty} бал."
 
         return f"Уже выставлен данный уровень сложности"
 
+    def change_effect(self, new_effect: str): # Метод изменения эффекта зелья
+
+        new_effect = new_effect.capitalize()
+        if new_effect != self.potion_effect:
+
+            self.potion_effect = new_effect
+            return f"Новый эффект зелья: {self.potion_effect}, установлен"
+
+        return "Зелье уже имеет данный эффект"
+
+    def status_state(self): # Состояние зелья (приготовлено/не приготовлено)
+        pass
+
+    def status_ingredients(self): # Текущие ингредиенты
+        pass
 
 
 Z = Potion("Расширения сознания", ["подорожник", "лапа лягушки", "тысячелистник", "слюна нетопыря",
@@ -247,3 +262,5 @@ print(d)
 print(Z.ingredients)
 ch = Z.change_difficulty(3)
 print(ch)
+ch_ef = Z.change_effect("Уносит в сон")
+print(ch_ef)

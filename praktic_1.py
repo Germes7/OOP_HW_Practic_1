@@ -327,6 +327,17 @@ class User:
 
         return f"Книга '{new_book}', уже в списке"
 
+    def delite_book(self, old_book: str): # Метод удаления книги из списка взятых книг
+
+        old_book = old_book.capitalize()
+
+        if old_book in self.list_book_user:
+
+            self.list_book_user.remove(old_book)
+            return f"Книга '{old_book}', удалена из списка взятых книг"
+
+        return f"В списке, нет данной книги '{old_book}'"
+
 
 
 class Book:
@@ -376,4 +387,6 @@ print(us)
 print(us.take_book("откровение"))
 print(us.take_book("откровение"))
 print(us.take_book("1984"))
+print(us)
+print(us.delite_book("луна и грош"))
 print(us)

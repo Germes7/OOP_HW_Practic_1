@@ -190,7 +190,7 @@ class Potion:
 
     def __init__(self, potion_view: str, ingredients: list[str], difficulty: int, potion_effect: str, state: bool):
         self.potion_view = potion_view
-        self.ingredients = ingredients
+        self.ingredients = [i.lower() for i in ingredients]
         self.difficulty = difficulty
         self.potion_effect = potion_effect
         self.state = state
@@ -204,15 +204,29 @@ class Potion:
 
     def add_ingredient(self, ingredient: str): # Метод добавления ингредиента
 
-        if not ingredient.lower() in self.ingredients:
+        ingredient = ingredient.lower()
+        if not ingredient in self.ingredients:
             self.ingredients.append(ingredient)
             return f"Ингредиент {ingredient}, добавлен"
 
-        return f"Данный ингредиент, уже в списке"
+        return "Данный ингредиент, уже в списке"
+
+    def deletion_ingredient(self, ingredient: str): # Метод удаления ингредиента
+
+        ingredient = ingredient.lower()
+        if ingredient in self.ingredients:
+            self.ingredients.remove(ingredient)
+            return f"Ингредиент {ingredient} удален из списка"
+
+        return f"Ингредиент {ingredient}, отсутствует в списке ингредиентов"
+
 
 Z = Potion("Расширения сознания", ["подорожник", "лапа лягушки", "тысячелистник", "слюна нетопыря",
                                    "правый глаз кабана", "зуб Лернейской гидры"], 7, "уносит в астрал", True)
 print(Z)
 ing = Z.add_ingredient("Лапа лягушки")
 print(ing)
+print(Z.ingredients)
+d = Z.deletion_ingredient("Правый глаз кабана")
+print(d)
 print(Z.ingredients)

@@ -240,15 +240,17 @@ class Potion:
         if new_effect != self.potion_effect:
 
             self.potion_effect = new_effect
-            return f"Новый эффект зелья: {self.potion_effect}, установлен"
+            return f"Установлен новый эффект зелья: {self.potion_effect}"
 
         return "Зелье уже имеет данный эффект"
 
     def status_state(self): # Состояние зелья (приготовлено/не приготовлено)
-        pass
+
+        return f"Состояние зелья: {self.state}"
 
     def status_ingredients(self): # Текущие ингредиенты
-        pass
+
+        return f"Список ингредиентов зелья: {self.ingredients}"
 
 
 Z = Potion("Расширения сознания", ["подорожник", "лапа лягушки", "тысячелистник", "слюна нетопыря",
@@ -264,3 +266,7 @@ ch = Z.change_difficulty(3)
 print(ch)
 ch_ef = Z.change_effect("Уносит в сон")
 print(ch_ef)
+st_st = Z.status_state()
+print(st_st)
+st_ing = Z.status_ingredients()
+print(st_ing)

@@ -338,6 +338,9 @@ class User:
 
         return f"В списке, нет данной книги '{old_book}'"
 
+    def current_list(self):
+
+        return f"Список взятых пользователем книг: {self.list_book_user}"
 
 
 class Book:
@@ -390,3 +393,4 @@ print(us.take_book("1984"))
 print(us)
 print(us.delite_book("луна и грош"))
 print(us)
+print(us.current_list())

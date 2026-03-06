@@ -215,10 +215,25 @@ class Potion:
 
         ingredient = ingredient.lower()
         if ingredient in self.ingredients:
+
             self.ingredients.remove(ingredient)
             return f"Ингредиент {ingredient} удален из списка"
 
         return f"Ингредиент {ingredient}, отсутствует в списке ингредиентов"
+
+    def change_difficulty(self, param: int): # Метод изменения сложности приготовления зелья
+
+        param = int(param)
+        if param < 1 or param > 10:
+            raise ValueError("Вводимые значения должны быть в диапазоне <1-10>")
+
+        if not param == self.difficulty:
+
+            self.difficulty = param
+            return f"Выставлен новый уровень сложности приготовления зелья: {self.difficulty}"
+
+        return f"Уже выставлен данный уровень сложности"
+
 
 
 Z = Potion("Расширения сознания", ["подорожник", "лапа лягушки", "тысячелистник", "слюна нетопыря",
@@ -230,3 +245,5 @@ print(Z.ingredients)
 d = Z.deletion_ingredient("Правый глаз кабана")
 print(d)
 print(Z.ingredients)
+ch = Z.change_difficulty(3)
+print(ch)

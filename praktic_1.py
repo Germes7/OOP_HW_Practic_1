@@ -360,7 +360,23 @@ class Book:
         self.status_book = status_book
         self.current_user = current_user
 
-        pass
+        if not isinstance(self.year, int):
+            raise ValueError("Год издательства, прописывай цифрами")
+
+        info_user_lst = self.User.list_book_user
+        info_user_name = self.User.name
+
+        if self.title.capitalize() in {info_user_lst}:
+
+            self.current_user = info_user_name
+            self.status_book = f"Книги нет в книгохранилище. Выдана: {self.current_user}"
+
+        else:
+            self.status_book = "Книга в наличии"
+
+    def __str__(self):
+        return f"Книга: {self.title}; автор: {self.autor}; год издания: {self.year}; жанр: {self.genre};\nстатус книги {self.status_book}; читатель взявший книгу {self.current_user}"
+
 
 class Library:
 
@@ -394,3 +410,5 @@ print(us)
 print(us.delite_book("луна и грош"))
 print(us)
 print(us.current_list())
+book = Book("1984", "Оруэлл Джорж", 1949, "утопия", status_book=Book.status_book, current_user=Book.current_user)
+print(book)

@@ -306,37 +306,42 @@ class Potion:
 class User:
     name: str
     library_card_number: int
-    list_book_user: list[str]
+    list_book_user: list[Book]
 
-    def __init__(self, name: str, library_card_number: int, list_book_user: list[str]):
+    def __init__(self, name: str, library_card_number: int, list_book_user: list[Book] = None):
 
         self.name = name
         self.library_card_number = library_card_number
-        self.list_book_user = [i.capitalize() for i in list_book_user]
+        self.list_book_user = list_book_user if list_book_user is not None else []
 
     def __str__(self):
-        return f"Имя пользователя библиотекой {self.name}.\nЧитательский билет №{self.library_card_number}.\nВзятые книги: {self.list_book_user}"
+        book_titles = [book.title for book in self.list_book_user]
+        return f"Имя пользователя библиотекой {self.name}.\nЧитательский билет №{self.library_card_number}.\nВзятые книги: {book_titles}"
 
-    def take_book(self, new_book: str): # Метод добавления книги в список взятых книг
+    def take_book(self, book: Book) -> str: # Метод добавления книги в список взятых книг
 
-        new_book = new_book.capitalize()
-        if new_book not in self.list_book_user:
+        if book.has_user() and book.current_user != self:
+            return f"Книга '{book.title}' выдана другому пользователю."
 
-            self.list_book_user.append(new_book)
-            return f"Книга '{new_book}', добавлена в список взятых книг: {self.list_book_user}"
+        if book not in self.list_book_user:
 
-        return f"Книга '{new_book}', уже в списке"
+            self.list_book_user.append(book)
+            return f"Книга '{book}', добавлена в список взятых книг: {self.list_book_user}"
 
-    def delite_book(self, old_book: str): # Метод удаления книги из списка взятых книг
+        return f"Книга {book} уже в списке забранных для чтения"
 
-        old_book = old_book.capitalize()
+    def delite_book(self, id: int): # Метод удаления книги из списка взятых книг
 
-        if old_book in self.list_book_user:
+        book_find = None
 
-            self.list_book_user.remove(old_book)
-            return f"Книга '{old_book}', удалена из списка взятых книг"
+        for book in self.list_book_user:
 
-        return f"В списке, нет данной книги '{old_book}'"
+            if book.get_id() == id:
+                book_find = book
+                break
+
+        self.list_book_user.remove(book_find)
+        return f"Книга '{book_find}', удалена из списка взятых книг"
 
     def current_list(self):
 
@@ -344,71 +349,153 @@ class User:
 
 
 class Book:
+    id: int
     title: str
     autor: str
     year: int
     genre: str
     status_book: str
-    current_user: str
+    current_user: [User]
 
-    def __init__(self, title: str, autor: str, year: int, genre: str, status_book: str, current_user: str):
+    def __init__(self, id: int, title: str, autor: str, year: int, genre: str):
 
+        self.id = id
         self.title = title
         self.autor = autor
         self.year = year
         self.genre = genre
-        self.status_book = status_book
-        self.current_user = current_user
+        self.current_user = None
+        self.status_book = "Книга в наличии"
 
         if not isinstance(self.year, int):
             raise ValueError("Год издательства, прописывай цифрами")
 
-        info_user_lst = self.User.list_book_user
-        info_user_name = self.User.name
+    def set_current_user(self, user: User | None): # Метод закрепления владельца книги
+        self.current_user = user
 
-        if self.title.capitalize() in {info_user_lst}:
-
-            self.current_user = info_user_name
-            self.status_book = f"Книги нет в книгохранилище. Выдана: {self.current_user}"
+        if user:
+            self.status_book = f"Выдана читателю {user.name}"
 
         else:
             self.status_book = "Книга в наличии"
 
+    def free_current_user(self):
+        self.current_user = None
+
+    def has_user(self) -> bool:
+        return self.current_user is not None
+
+    def get_id(self) -> int:
+        return self.id
+
     def __str__(self):
-        return f"Книга: {self.title}; автор: {self.autor}; год издания: {self.year}; жанр: {self.genre};\nстатус книги {self.status_book}; читатель взявший книгу {self.current_user}"
+        return f"Книга: {self.title}; автор: {self.autor}; год издания: {self.year}; жанр: {self.genre};\nстатус книги {self.status_book}; читатель взявший книгу {self.current_user.name}"
 
 
 class Library:
 
     library_name: str
     library_address: str
-    book_list: list[str]
-    user_list: list[str]
+    book_list: list[Book]
+    user_list: list[User]
 
-    def __init__(self, library_name: str, library_address: str, book_list: list[str], user_list: list[str]):
+    def __init__(self, library_name: str, library_address: str):
 
         self.library_name = library_name
         self.library_address = library_address
-        self.book_list = book_list
-        self.user_list = user_list
+        self.book_list = []
+        self.user_list = []
 
-    def add_book(book: Book): # Метод Добавления книги в список книг библиотеки
+    def add_book(self, book: Book): # Метод Добавления книги в список книг библиотеки
 
-        pass
+        if book not in self.book_list:
+            self.book_list.append(book)
+
+    def add_user(self, user: User):
+
+        if user not in self.user_list:
+            self.user_list.append(user)
+
+    def finf_book_id(self, book_id: int):
+
+        for book in self.book_list:
+            if book.get_id() == book_id:
+                return book
+
+        return None
+
+    def try_gaving_book(self, user: User, book_id: int): # Метод попытка выдать книгу пользователю
+
+        target_book = self.finf_book_id(book_id)
+
+        if target_book is None: return False
+
+        if target_book.has_user(): return False
+
+        if user not in self.user_list: return False
+
+        target_book.set_current_user(user)
+        user.take_book(target_book)
+        return True
+
+    def del_book(self, user: User, book_id: int):
+        target_book = self.finf_book_id(book_id)
+
+        if target_book is None: return False
 
     def __str__(self):
         return f"""Библиотека: '{self.library_name}';\nАдрес: {self.library_address};\nКоличество книг: {len(self.book_list)} шт.
 Количество читателей: {len(self.user_list)} чел."""
 
 
-us = User("Леха",1237, ["Луна и грош"])
-print(us)
-print(us.take_book("откровение"))
-print(us.take_book("откровение"))
-print(us.take_book("1984"))
-print(us)
-print(us.delite_book("луна и грош"))
-print(us)
-print(us.current_list())
-book = Book("1984", "Оруэлл Джорж", 1949, "утопия", status_book=Book.status_book, current_user=Book.current_user)
-print(book)
+
+# Создаем библиотеку
+Lib = Library("Ленинская", "пр. Ленина, 15")
+
+# Создаем книги
+b1 = Book(id=123, title="1984", autor="Оруэлл", year=1949, genre="утопия")
+b2 = Book(id=720, title="Мастер и Маргарита", autor="Булгаков", year=1967, genre="мистика")
+b3 = Book(id=456, title="Гордость и предубеждение", autor="Остин", year=1813, genre="роман") # Для демонстрации
+
+# Создаем пользователей
+u1 = User("Леха", 2378)
+u2 = User("Маша", 5678) # У пользователя u2 пока нет книг
+
+# Добавляем книги и пользователей в библиотеку
+Lib.add_book(b1)
+Lib.add_book(b2)
+Lib.add_book(b3)
+Lib.add_user(u1)
+Lib.add_user(u2)
+
+print("<<Информация о библиотеке>>\n")
+print(Lib)
+
+print("\nПопытка выдать книгу u1 (ID 123)")
+success = Lib.try_gaving_book(u1, 123)
+if success:
+    print(u1)
+    print(b1)
+
+print("\nПопытка выдать книгу u2 (ID 123)")
+
+Lib.try_gaving_book(u2, 123)
+
+print("\nПопытка выдать книгу u1 (ID 999 - несуществующая)")
+Lib.try_gaving_book(u1, 999)
+
+print("\nПопытка выдать книгу u2 (ID 720)")
+Lib.try_gaving_book(u2, 720)
+print(u2)
+print(b2)
+
+print("\nПопытка вернуть книгу u1 (ID 123)")
+Lib.del_book(u1, 123)
+print(u1)
+print(b1)
+
+print("\nПопытка вернуть книгу u1 (ID 720 - которую брал u2)")
+Lib.del_book(u1, 720)
+
+print("\nПопытка вернуть книгу u2 (ID 456 - которую никто не брал)")
+Lib.del_book(u2, 456)
